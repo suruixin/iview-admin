@@ -1,6 +1,6 @@
 <template>
-  <Layout style="height: 100%" class="main">
-    <Sider hide-trigger collapsible :width="256" :collapsed-width="64" v-model="collapsed" class="left-sider" :style="{overflow: 'hidden'}">
+  <Layout style="height: 100%" class="main" :class="isIe9 ? 'mainIe' : ''">
+    <Sider hide-trigger collapsible :width="256" :collapsed-width="64" v-model="collapsed" class="left-sider" :style="{overflow: 'hidden'}" :class="isIe9 ? 'left-siderIe' : ''">
       <side-menu accordion ref="sideMenu" :active-name="$route.name" :collapsed="collapsed" @on-select="turnToPage" :menu-list="menuList">
         <!-- 需要放在菜单上面的内容，如Logo，写在side-menu标签内部，如下 -->
         <div class="logo-con">
@@ -9,7 +9,7 @@
         </div>
       </side-menu>
     </Sider>
-    <Layout>
+    <Layout :class="{'right-contentIe': isIe9, 'right-contentIe-close': collapsed}">
       <Header class="header-con">
         <header-bar :collapsed="collapsed" @on-coll-change="handleCollapsedChange">
           <user :message-unread-count="unreadCount" :user-avatar="userAvatar"/>
@@ -66,7 +66,8 @@ export default {
       collapsed: false,
       minLogo,
       maxLogo,
-      isFullscreen: false
+      isFullscreen: false,
+      isIe9: (this.$isIe === 'ie 9')
     }
   },
   computed: {
@@ -172,8 +173,6 @@ export default {
       route: { name, params, query, meta }
     })
     this.setBreadCrumb(this.$route)
-    // 设置初始语言
-    this.setLocal(this.$i18n.locale)
     // 如果当前打开页面不在标签栏中，跳到homeName页
     if (!this.tagNavList.find(item => item.name === this.$route.name)) {
       this.$router.push({
@@ -185,3 +184,24 @@ export default {
   }
 }
 </script>
+
+<style lang="less">
+  .mainIe{
+    position: relative;
+    height: 100%;
+    .left-siderIe{
+      height: 100%;
+      background: #001529;
+    }
+    .right-contentIe{
+      position: absolute;
+      left: 265px;
+      right: 0;
+      top: 0;
+      height: 100%;
+    }
+    .right-contentIe-close{
+      left: 65px;
+    }
+  }
+</style>

@@ -1,115 +1,59 @@
-<p align="center">
-    <a href="https://www.iviewui.com">
-        <img width="200" src="https://file.iviewui.com/logo-new.svg">
-    </a>
-</p>
+#iview-admin兼容ie9版
 
-<h1>
-iView Admin
-    <h3>Vue.js 2.0 admin management system template based on iView.</h3>
-</h1>
+> 删除功能如下
 
-[![](https://img.shields.io/github/release/iview/iview-admin.svg)](https://github.com/iview/iview-admin/releases)
-[![](https://img.shields.io/travis/iview/iview-admin.svg?style=flat-square)](https://travis-ci.org/iview/iview-admin)
-[![vue](https://img.shields.io/badge/vue-2.5.17-brightgreen.svg?style=flat-square)](https://github.com/vuejs/vue)
-[![iview ui](https://img.shields.io/badge/iview-3.2.2-brightgreen.svg?style=flat-square)](https://github.com/iview/iview)
-[![npm](https://img.shields.io/npm/l/express.svg)]()
+1、 删除国际化
 
-<h2 align="center">Special Sponsors</h2>
-<table>
-      <tbody>
-        <tr>
-          <td align="center" valign="middle">
-            <a href="https://segmentfault.com/ls/1650000016424063" target="_blank">
-              <img width="300" src="https://file.iviewui.com/asd/asd-i-2.png">
-            </a>
-          </td>
-          <td align="center" valign="middle">
-            <a href="https://e.coding.net/?utm_source=iview" target="_blank">
-              <img width="300" src="https://file.iviewui.com/asd/asd-coding3.png">
-            </a>
-          </td>
-            <td align="center" valign="middle">
-            <a href="https://cn.udacity.com/fend/?utm_source=iviewui&utm_medium=banner&utm_campaign=fend" target="_blank">
-              <img width="300" src="https://file.iviewui.com/asd/asd-u-new-2.png">
-            </a>
-          </td>
-        </tr>
-      </tbody>
-</table>
+2、 删除组织结构图
 
-> If you'd like be a sponsor, to show your ads in GitHub and iView doc, please email admin@aresn.com to get more infomation.
+3、 删除树状表格
 
-## Introduction
+4、 删除Markdown编辑器
 
-iView Admin is a front-end management background integration solution. It based on [Vue.js](https://github.com/vuejs/vue) and use the UI Toolkit [iView](https://github.com/iview/iview).
+5、 删除富文本编辑器（wangedit bug还是很多的）
 
-- [Document](https://lison16.github.io/iview-admin-doc/)
-- [Preview](https://admin.iviewui.com/)
-- [Base template recommends using](https://github.com/iview/iview-admin/tree/template)
+> 新增功能
 
-![image](https://file.iviewui.com/admin-dist/admin-preview.png)
+1、 新增 `this.$isIe` 用来判断是否为ie
 
-## Features
-
-- Login / Logout
-- Permission Authentication
-    - A list of filters
-    - Permission to switch
-- i18n
-- Components
-    - Rich Text Editor
-    - Markdown Editor
-    - City Cascader
-    - Photos preview and edit
-    - Draggable list
-    - File upload
-    - Digital gradient
-    - split-pane
-- Form
-    - The article published
-    - Workflow
-- Table
-    - Drag-and-drop sort
-    - Searchable form
-    - Table export data
-        - Export to Csv file
-        - Export to Xls file
-    - Table to picture
-- Error Page
-    - 403
-    - 404
-    - 500
-- Router
-    - Dynamic routing
-    - With reference page
-- Theme
-- Shrink the sidebar
-- Tag navigation
-- Breadcrumb navigation
-- Full screen / exit full screen
-- Lock screen
-- The message center
-- Personal center
-
-## Getting started
-```bush
-# clone the project
-git clone https://github.com/iview/iview-admin.git
-
-// install dependencies
-npm install
-
-// develop
-npm run dev
+```
+// ie9 xxx.vue
+console.log(this.$isIe) // ie 9
 ```
 
-## Build
-```bush
-npm run build
+2、 新增 `this.$cookies` 用来操作cookie, 查看[js-cookie](https://github.com/js-cookie/js-cookie)
+
+```
+// xxx.vue
+this.$cookies.get('xxx')
 ```
 
-## License
-[MIT](http://opensource.org/licenses/MIT)
+3、 新增 `this.$env` 用来判断是否为生产环境
+```
+// xxx.vue development
+console.log(this.$env) // true
+```
 
-Copyright (c) 2016-present, iView
+4、 新增 `this.$indexOf` 用来输出data属性
+```
+// xxx.vue
+console.log(this.$indexOf([])) // array
+```
+
+5、 新增 dom循环事件
+```
+document.getElementsByTagName('a').forEach(m => {
+  console.log(m)
+})
+```
+
+6、 增加config配置项
+```
+// mian.js
+Vue.use(globalTool, {
+  cookies: true, // 是否启用cookies功能
+  indexOf: true, // 是否启用indexOf功能
+  each: 'forEach', // dom元素循环名 及`document.getElementsByTagName('a').forEach`中的`forEach`
+  prefix: '$' // 调用时的前缀名及`this.$cookies`中的`$`
+})
+```

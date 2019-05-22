@@ -108,15 +108,6 @@ export default [
     component: Main,
     children: [
       {
-        path: 'tree_select_page',
-        name: 'tree_select_page',
-        meta: {
-          icon: 'md-arrow-dropdown-circle',
-          title: '树状下拉选择器'
-        },
-        component: () => import('@/view/components/tree-select/index.vue')
-      },
-      {
         path: 'count_to_page',
         name: 'count_to_page',
         meta: {
@@ -144,24 +135,6 @@ export default [
         component: () => import('@/view/components/drag-drawer')
       },
       {
-        path: 'org_tree_page',
-        name: 'org_tree_page',
-        meta: {
-          icon: 'ios-people',
-          title: '组织结构树'
-        },
-        component: () => import('@/view/components/org-tree')
-      },
-      {
-        path: 'tree_table_page',
-        name: 'tree_table_page',
-        meta: {
-          icon: 'md-git-branch',
-          title: '树状表格'
-        },
-        component: () => import('@/view/components/tree-table/index.vue')
-      },
-      {
         path: 'cropper_page',
         name: 'cropper_page',
         meta: {
@@ -187,24 +160,6 @@ export default [
           title: '分割窗口'
         },
         component: () => import('@/view/components/split-pane/split-pane.vue')
-      },
-      {
-        path: 'markdown_page',
-        name: 'markdown_page',
-        meta: {
-          icon: 'logo-markdown',
-          title: 'Markdown编辑器'
-        },
-        component: () => import('@/view/components/markdown/markdown.vue')
-      },
-      {
-        path: 'editor_page',
-        name: 'editor_page',
-        meta: {
-          icon: 'ios-create',
-          title: '富文本编辑器'
-        },
-        component: () => import('@/view/components/editor/editor.vue')
       },
       {
         path: 'icons_page',
@@ -292,25 +247,6 @@ export default [
           beforeCloseName: 'before_close_normal'
         },
         component: () => import('@/view/tools-methods/tools-methods.vue')
-      }
-    ]
-  },
-  {
-    path: '/i18n',
-    name: 'i18n',
-    meta: {
-      hideInBread: true
-    },
-    component: Main,
-    children: [
-      {
-        path: 'i18n_page',
-        name: 'i18n_page',
-        meta: {
-          icon: 'md-planet',
-          title: 'i18n - {{ i18n_page }}'
-        },
-        component: () => import('@/view/i18n/i18n-page.vue')
       }
     ]
   },
