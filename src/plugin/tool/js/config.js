@@ -1,10 +1,11 @@
+import con from '@/config'
 let config = (obj = {}) => {
   return Object.assign({
-    cookies: true,
+    cookies: false,
     indexOf: true,
     each: 'forEach',
     prefix: '$'
-  }, process.env, obj)
+  }, process.env, con, obj)
 }
 
 export default config

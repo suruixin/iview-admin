@@ -47,7 +47,19 @@ document.getElementsByTagName('a').forEach(m => {
 })
 ```
 
-6、 增加config配置项
+6、 新增 session 事件 用来存储sessionStorage
+```
+// 新增
+this.$session.set(key, value)
+// 查询
+this.$session.get(key)
+// 删除
+this.$session.delete(key)
+// 全部删除
+this.$session.clear()
+```
+
+7、 增加config配置项
 ```
 // mian.js
 Vue.use(globalTool, {
@@ -57,3 +69,94 @@ Vue.use(globalTool, {
   prefix: '$' // 调用时的前缀名及`this.$cookies`中的`$`
 })
 ```
+
+8、 新增模板
+例子:
+```
+<template>
+  <tableTemplate :columns="columns" :seek="seek" :params="params" :dataCallBack="dataCallBack">
+    <a href="javascript:void(0)" @click="add()" slot="fun">
+      <Icon type="edit"></Icon>
+      新增
+    </a>
+  </tableTemplate>
+</template>
+<script>
+export default {
+  components: {
+    tableTemplate: require('@/components/tableTemplate').default
+  },
+  data () {
+    return {
+      params:{
+        size: 10,
+        page: 0
+      },
+      seek: [{
+         type: 'input',
+         key: 'id',
+         title: 'id'
+       }, {
+         type: 'input',
+         key: 'label',
+         title: '项目组'
+       }],
+      columns: [{
+        title: 'Name',
+        key: 'name'
+      },
+      {
+        title: 'Age',
+        key: 'age'
+      },
+      {
+        title: 'Address',
+        key: 'address'
+      }],
+      api: this.$api.template
+    }
+  }
+  methods: {
+    add () { // 新增
+      console.log('点击新增事件')
+    },
+    dataCallBack (params) {
+      this.api.get(params).then(res => {
+        return {
+          content: res.data.content,
+          total: res.data.totalElements
+        }
+      })
+    }
+  }
+}
+</script>
+```
+
+
+参数:
+columns: [Array] 表格列的配置描述 参见 https://www.iviewui.com/components/table
+seek: [Array] 搜索项配置描述
+  {
+    span: [Number], // 元素宽度  参见24栅格
+    title: [String], // 搜索项名字
+    key: [String], // 搜索项对应数据请求字段
+    type: [String], // 可选项 input(文本框) select(下拉框) seek(搜索框), 用来确定搜索类型
+    data: [Array],
+      { // 仅限 type === (select || seek) 所有，选项数据
+        value: [String], // 发送请求对应项
+        name: [String] // 展示给用户的项
+      }
+    remoteMethod: [Function], // 仅限type === seek所有，用来请求数据
+    loading: [Boolean] // 仅限type === seek所有，等待数据请求返回结果时等待使用
+  }
+params: [Object] 请求列表数据时，初始化参数
+title: [String] 表格最外侧框题目  默认为 列表
+dataCallBack: [Function] 数据请求，需要注意，需要在then中将 数据格式设置为 content 将总页数设置为 total
+
+方法:
+// 更新数据
+调用vuex中mutations的方法 setCount 便可以更新数据
+
+插槽:
+开放一个插槽 fun  位于表格上方 及表格title 所在位置，用来添加新增等方法
