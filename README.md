@@ -57,3 +57,6 @@ Vue.use(globalTool, {
   prefix: '$' // 调用时的前缀名及`this.$cookies`中的`$`
 })
 ```
+
+|1|2|
+|2|3|
