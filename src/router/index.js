@@ -24,9 +24,13 @@ router.beforeEach((to, from, next) => {
   const token = getToken()
   if (!token && to.name !== LOGIN_PAGE_NAME) {
     // 未登录且要跳转的页面不是登录页
-    next({
-      name: LOGIN_PAGE_NAME // 跳转到登录页
-    })
+    if (config.jumpList.some(m => { if (m === to.name) { return true } })) { // 不跳转登录页
+      next()
+    } else {
+      next({
+        name: LOGIN_PAGE_NAME // 跳转到登录页
+      })
+    }
   } else if (!token && to.name === LOGIN_PAGE_NAME) {
     // 未登陆且要跳转的页面是登录页
     next() // 跳转

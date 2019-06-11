@@ -6,7 +6,9 @@
     width: 600, // 弹框宽度
     modalLoading: true, // 点击确定Loading状态
     type: 'add', // 弹出框类型。目前支持三种 add edit info
-    title: '新增' // 弹出框头部
+    title: '新增', // 弹出框头部
+    name: '', // 新增按钮文字
+    maskClosable: false // 点击弹框遮罩是否关闭
   }
   columns: [Array] 表格列的配置描述 参见 https://www.iviewui.com/components/table
   seek: [Array] 搜索项配置描述
@@ -47,6 +49,7 @@
       :ok-text="modalParams.okText"
       :loading="modalParams.modalLoading"
       :width="modalParams.width"
+      :mask-closable="modalParams.maskClosable"
       @on-ok="asyncOK">
       <slot name="add" v-if="modalParams.type === 'add'" :flag="modalParams.show"></slot>
       <slot name="edit" v-if="modalParams.type === 'edit'" :flag="modalParams.show"></slot>
@@ -55,7 +58,7 @@
     <tableTemplate :columns="columns" :seek="seek" :params="params" :dataCallBack="dataCallBack">
       <a href="javascript:void(0)" @click="add()" slot="fun" v-if="addModule">
         <Icon type="edit"></Icon>
-        {{modalParams.title}}
+        {{modalParams.name ? modalParams.name : modalParams.title}}
       </a>
     </tableTemplate>
   </div>
@@ -65,7 +68,7 @@
 export default {
   name: 'commonTable',
   components: {
-    tableTemplate: require('./templates').default
+    tableTemplate: require('./index').default
   },
   props: {
     params: { // 数据请求初始化参数
@@ -95,7 +98,8 @@ export default {
           show: false,
           modalLoading: true,
           type: 'add',
-          title: '新增'
+          title: '新增',
+          maskClosable: false
         }
       }
     },
@@ -116,7 +120,9 @@ export default {
           this.handleSubmit().then(res => {
             this.modalParams.modalLoading = false
           }).catch(err => {
-            this.$Message.error(err)
+            if (err) {
+              this.$Message.error(err)
+            }
             this.modalParams.modalLoading = false
             setTimeout(m => {
               this.modalParams.modalLoading = true

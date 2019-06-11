@@ -70,7 +70,19 @@ Vue.use(globalTool, {
 })
 ```
 
-8、 新增模板
+8、 新增跳转时是不需要登录 tab导航栏是否显示
+  > 用法
+
+  ```
+  // src/config/iview.js
+  tab: false, // tab导航栏是否显示
+  jumpList: ['routerName'] // 写入不需要跳转的router的name值
+  ```
+
+9、 新增在win7 ie9下css页面加载不全的问题，在打包后，会将css切分为不大于300kb的文件，用于解决ie9页面错乱的问题，开发环境下，请使用ie11模拟ie9来测试
+
+新增模板
+1、 table表格组合
 例子:
 ```
 <template>
@@ -84,7 +96,7 @@ Vue.use(globalTool, {
 <script>
 export default {
   components: {
-    tableTemplate: require('@/components/tableTemplate').default
+    tableTemplate: require('_c/tableTemplate').default
   },
   data () {
     return {

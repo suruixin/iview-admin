@@ -26,6 +26,7 @@
     "sortablejs": "^1.7.0",
     "vue": "^2.5.10",
     "vue-router": "^3.0.1",
+    "vue-upload-component": "^2.8.20",
     "vuedraggable": "^2.16.0",
     "vuex": "^3.0.1",
     "xlsx": "^0.13.3"
@@ -38,6 +39,7 @@
     "@vue/eslint-config-standard": "^3.0.0-beta.10",
     "@vue/test-utils": "^1.0.0-beta.10",
     "chai": "^4.1.2",
+    "css-split-webpack-plugin": "^0.2.6",
     "eslint-plugin-cypress": "^2.0.1",
     "less": "^2.7.3",
     "less-loader": "^4.0.5",
