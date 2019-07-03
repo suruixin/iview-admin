@@ -119,6 +119,10 @@ export default {
         if (this.handleSubmit) {
           this.handleSubmit().then(res => {
             this.modalParams.modalLoading = false
+            this.modalParams.show = false
+            setTimeout(m => {
+              this.modalParams.modalLoading = true
+            }, 100)
           }).catch(err => {
             if (err) {
               this.$Message.error(err)
