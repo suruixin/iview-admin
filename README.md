@@ -92,6 +92,27 @@ Vue.use(globalTool, {
 `/src/assets/less/index.less`
 [less学习](http://lesscss.cn/)
 
+> 11、 增加rule方法引入，规则添加 /src/plugin/tool/js/rule.js 使用方法如下:
+
+```
+xxx.vue
+ruleValidate: {
+  [NAME]: [
+    { required: true, message: '请输入姓名', trigger: 'blur' }
+  ],
+  [IDCARD]: [
+    {
+      validator: this.$rule.validateIdCard, trigger: 'blur'
+    }
+  ],
+  [PHONE]: [
+    {
+      validator: this.$rule.validatePhone, trigger: 'blur'
+    }
+  ]
+}
+```
+
 ## 新增模板
 > 1、 table表格组合
 

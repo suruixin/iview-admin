@@ -139,27 +139,24 @@ export default {
     },
     getData () {
       this.loading = true
-      console.log(this.param, this.params, this.queryForm, { page: this.currentPage - 1 })
-      return this.dataCallBack(Object.assign(this.param, this.params, this.queryForm, { page: this.currentPage - 1 })).then(res => {
-        let queyLastPage = false
-        if (res.srxData && res.srxData.length === 0) {
-          if (this.currentPage !== 1) {
-            queyLastPage = true
+      return new Promise((resolve, reject) => {
+        this.dataCallBack(Object.assign(this.param, this.params, this.queryForm, { page: this.currentPage - 1 })).then(res => {
+          if (res.content && res.content.length === 0 && this.currentPage !== 1) { // 处理为最后一页仅一条数据时删除该数据页面数据无法加载的问题
+            this.currentPage--
+            return this.getData()
+          } else {
+            this.tableData = res.content
+            this.total = res.total
+            setTimeout(m => {
+              this.loading = false
+            }, 300)
+            resolve(res)
           }
-        }
-        if (queyLastPage) {
-          this.currentPage--
-          this.getData()
-        } else {
-          this.tableData = res.content
-          this.total = res.total
-          setTimeout(m => {
-            this.loading = false
-          }, 300)
-        }
-      }).catch(() => {
-        this.$Message.error('获取信息失败！请稍后再试！')
-        this.loading = false
+        }).catch(err => {
+          this.$Message.error('获取信息失败！请稍后再试！')
+          this.loading = false
+          reject(err)
+        })
       })
     },
     resetForm (test) { // 重置搜索项

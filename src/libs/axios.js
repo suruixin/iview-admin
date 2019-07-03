@@ -35,6 +35,28 @@ class HttpRequest {
   interceptors (instance, url) {
     // 请求拦截
     instance.interceptors.request.use(config => {
+      // 每次请求添加时间戳 防止缓存
+      if (config.method === 'post') {
+        if (typeof config.data === 'object') {
+          Object.assign(config.data, {
+            _t: Date.parse(new Date()) / 1000
+          })
+        } else {
+          config.data = {
+            _t: Date.parse(new Date()) / 1000
+          }
+        }
+      } else if (config.method === 'get') {
+        if (typeof config.params === 'object') {
+          Object.assign(config.params, {
+            _t: Date.parse(new Date()) / 1000
+          })
+        } else {
+          config.params = {
+            _t: Date.parse(new Date()) / 1000
+          }
+        }
+      }
       // 添加全局的loading...
       if (!Object.keys(this.queue).length) {
         // Spin.show() // 不建议开启，因为界面不友好
